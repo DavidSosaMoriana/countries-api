@@ -21,6 +21,11 @@ body {
     height: 100%;
 }
 
+.app.darkMode {
+    background-color: var(--dark-mode-bg);
+    color: white;
+}
+
 .app_body {
     margin: 15px auto 0;
     padding: 15px;
@@ -42,6 +47,11 @@ body {
     padding: 15px;
     background-color: white;
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+.header.darkMode {
+    background-color: var(--dark-mode-elements);
+    color: white;
 }
 
 .header_container {
@@ -80,6 +90,15 @@ body {
     gap: 5px;
 }
 
+.search_input.darkMode {
+    background-color: var(--dark-mode-elements);
+    color: white;
+}
+
+.search_input.darkMode input {
+    color: white;
+}
+
 .search_input input {
     border: 0;
     background-color: transparent;
@@ -104,6 +123,23 @@ body {
     outline: none;
 }
 
+.select_region.darkMode {
+    background-color: var(--dark-mode-elements);
+    color: white;
+}
+
+.select_region.darkMode select {
+    color: white;
+}
+
+.select_region.darkMode option {
+    background-color: var(--dark-mode-elements);
+    color: white;
+}
+
+.search_input.darkMode input::placeholder {
+    color: white;
+}
 /* Country Component */
 .country {
     background-color: white;
@@ -112,6 +148,11 @@ body {
     border-radius: 5px;
     height: 370px;
     cursor: pointer;
+}
+
+.country.darkMode {
+    background-color: var(--dark-mode-elements);
+    color: white;
 }
 
 .country .flag_container {
@@ -131,6 +172,10 @@ body {
 
 .country .values {
     color: gray;
+}
+
+.country .values.darkMode {
+    color: lightgray;
 }
 
 .country .details {
@@ -166,6 +211,11 @@ body {
     cursor: pointer;
 }
 
+.back.darkMode {
+    background-color: var(--dark-mode-elements);
+    color: white;
+}
+
 .country_details_body {
     margin: 15px auto 0;
     padding: 15px;
@@ -189,6 +239,10 @@ body {
     flex: 0.5;
 }
 
+.info.darkMode {
+    color: white;
+}
+
 .info_container {
     display: flex;
     justify-content: space-between;
@@ -204,6 +258,10 @@ body {
     color: gray;
 }
 
+.info .values.darkMode {
+    color: lightgray;
+}
+
 .border_country {
     padding: 5px 10px;
     background-color: white;
@@ -211,4 +269,47 @@ body {
     margin: 10px;
     cursor: pointer;
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+.border_country.darkMode {
+    background-color: var(--dark-mode-elements);
+    color: white;
+}
+
+/* Media Queries */
+@media(max-width: 800px) {
+    .country_details_body {
+        flex-direction: column;
+    }
+
+    .info_container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .left_info {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 720px) {
+    .inputs {
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    .search_input {
+        margin-bottom: 20px;
+    }
+
+    .switch_mode {
+        font-size: 12px;
+        flex: 0.5;
+        justify-content: flex-end;
+    }
+
+    .logo {
+        flex: 0.5;
+        font-size: 17px;
+    }
 }
