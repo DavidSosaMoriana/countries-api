@@ -1,10 +1,10 @@
 import React from 'react';
 import WestIcon from '@mui/icons-material/West';
 
-export default function CountryDetails() {
+export default function CountryDetails({ darkMode }) {
     return (
         <div className="country_details">
-            <button className="back">
+            <button className={`back ${darkMode ? 'darkMode' : ''}`}>
                 <WestIcon />
                 <p>Back</p>
             </button>
@@ -22,42 +22,42 @@ export default function CountryDetails() {
                         <div className="right_info">
                             <p>
                                 Native Name:{' '}
-                                <span className="values">test</span>
+                                <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
                             </p>
                             <p>
-                                Population: <span className="values">test</span>
+                                Population: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
                             </p>
                             <p>
-                                Region: <span className="values">test</span>
+                                Region: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
                             </p>
                             <p>
-                                Sub Region: <span className="values">test</span>
+                                Sub Region: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
                             </p>
                             <p>
-                                Capital: <span className="values">test</span>
+                                Capital: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
                             </p>
                         </div>
                         <div className="left_info">
                             <p>
                                 Top Level Domain:{' '}
-                                <span className="values">test</span>
+                                <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
                             </p>
                             <p>
-                                Currencies: <span className="values">test</span>
+                                Currencies: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
                             </p>
                             <p>
-                                Languages: <span className="values">test</span>
+                                Languages: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
                             </p>
                         </div>
                     </div>
                     Border Countries:
-                    <div className="border_country">
+                    <div className={`border_country ${darkMode ? 'darkMode' : ''}`}>
                         <p>test</p>
                     </div>
-                    <div className="border_country">
+                    <div className={`border_country ${darkMode ? 'darkMode' : ''}`}>
                         <p>test</p>
                     </div>
-                    <div className="border_country">
+                    <div className={`border_country ${darkMode ? 'darkMode' : ''}`}>
                         <p>test</p>
                     </div>
                 </div>
