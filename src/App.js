@@ -1,4 +1,5 @@
 import Header from './components/Header';
+import Country from './components/Country';
 import SearchIcon from '@mui/icons-material/Search';
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
                     </div>
                     <div className="select_region">
                         <select>
-                            <option>All</option>
+                            <option disabled selected hidden>Filter by Continent</option>
                             <option>Africa</option>
                             <option>Americas</option>
                             <option>Asia</option>
@@ -24,6 +25,10 @@ function App() {
                             <option>Oceania</option>
                         </select>
                     </div>
+                </div>
+
+                <div className="countries">
+                    <Country />
                 </div>
             </div>
         </div>
