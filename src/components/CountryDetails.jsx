@@ -1,10 +1,59 @@
 import React from 'react';
 import WestIcon from '@mui/icons-material/West';
+import { useParams, useNavigate } from 'react-router-dom';
 
-export default function CountryDetails({ darkMode }) {
+export default function CountryDetails({ darkMode, countries }) {
+    const params = useParams();
+    const navigate = useNavigate();
+
+    let name;
+    let flag;
+    let nativeName;
+    let population;
+    let region;
+    let subregion;
+    let capital;
+    let topLevelDomain;
+    let currencies = [];
+    let languages = [];
+    let borders = [];
+    
+    countries.forEach(country => {
+        if(country.alpha3Code === params.countryCode) {
+            name = country.name;
+            flag = country.flag;
+            nativeName = country.nativeName;
+            population = country.population;
+            region = country.region;
+            subregion = country.subregion;
+            capital = country.capital;
+            topLevelDomain = country.topLevelDomain;
+
+            country.currencies.forEach((currency) => {
+                currencies.push(currency.name)
+            })
+
+            country.languages.forEach((language) => {
+                languages.push(language.name)
+            })
+
+            if(country.borders !== undefined){
+                    country.borders.forEach((border) => {
+                    borders.push(border)
+                })
+            }else {
+                console.log(country);
+            }
+        }
+    })
+
+    const Back = () => {
+        navigate("/");
+    }
+
     return (
         <div className="country_details">
-            <button className={`back ${darkMode ? 'darkMode' : ''}`}>
+            <button className={`back ${darkMode ? 'darkMode' : ''}`} onClick={Back}>
                 <WestIcon />
                 <p>Back</p>
             </button>
@@ -12,54 +61,53 @@ export default function CountryDetails({ darkMode }) {
             <div className="country_details_body">
                 <div className="img_container">
                     <img
-                        src="https://st.depositphotos.com/29544566/56468/i/600/depositphotos_564687710-stock-photo-close-up-realistic-texture-fabric.jpg"
+                        src={flag}
                         alt=""
                     />
                 </div>
                 <div className="info">
-                    <h2>Name</h2>
+                    <h2>{name}</h2>
                     <div className="info_container">
                         <div className="right_info">
                             <p>
                                 Native Name:{' '}
-                                <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
+                                <span className={`values ${darkMode ? 'darkMode' : ''}`}>{nativeName}</span>
                             </p>
                             <p>
-                                Population: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
+                                Population: <span className={`values ${darkMode ? 'darkMode' : ''}`}>{population}</span>
                             </p>
                             <p>
-                                Region: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
+                                Region: <span className={`values ${darkMode ? 'darkMode' : ''}`}>{region}</span>
                             </p>
                             <p>
-                                Sub Region: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
+                                Sub Region: <span className={`values ${darkMode ? 'darkMode' : ''}`}>{subregion}</span>
                             </p>
                             <p>
-                                Capital: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
+                                Capital: <span className={`values ${darkMode ? 'darkMode' : ''}`}>{capital}</span>
                             </p>
                         </div>
                         <div className="left_info">
                             <p>
                                 Top Level Domain:{' '}
-                                <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
+                                <span className={`values ${darkMode ? 'darkMode' : ''}`}>{topLevelDomain}</span>
                             </p>
                             <p>
-                                Currencies: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
+                                Currencies: <span className={`values ${darkMode ? 'darkMode' : ''}`}>{currencies}</span>
                             </p>
                             <p>
-                                Languages: <span className={`values ${darkMode ? 'darkMode' : ''}`}>test</span>
+                                Languages: <span className={`values ${darkMode ? 'darkMode' : ''}`}>{languages}</span>
                             </p>
                         </div>
                     </div>
                     Border Countries:
-                    <div className={`border_country ${darkMode ? 'darkMode' : ''}`}>
-                        <p>test</p>
-                    </div>
-                    <div className={`border_country ${darkMode ? 'darkMode' : ''}`}>
-                        <p>test</p>
-                    </div>
-                    <div className={`border_country ${darkMode ? 'darkMode' : ''}`}>
-                        <p>test</p>
-                    </div>
+                    {borders.map((border) => {
+                        return(
+                            <div className={`border_country ${darkMode ? 'darkMode' : ''}`}>
+                            <p>{border}</p>
+                        </div>
+                        )
+                      
+                    })}
                 </div>
             </div>
         </div>

@@ -4,12 +4,14 @@ import Country from './components/Country';
 import CountryDetails from './components/CountryDetails';
 import SearchIcon from '@mui/icons-material/Search';
 import { Routes, Route } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
     const [darkMode, setDarkMode] = useState('false');
     const [countries, setCountries] = useState([]);
     const countriesInputRef = useRef();
     const regionRef = useRef();
+    const navigate = useNavigate();
 
     const noCountries = countries.status || countries.message;
 
@@ -63,12 +65,14 @@ function App() {
     const selectRegion = () => {
         const selectValue = regionRef.current.value;
 
-        if(selectValue.trim()) {
+        if (selectValue.trim()) {
             const fetchSelect = async () => {
-                const response = await fetch(`https://restcountries.com/v2/region/${selectValue}`)
+                const response = await fetch(
+                    `https://restcountries.com/v2/region/${selectValue}`
+                );
                 const data = await response.json();
 
-                if(selectValue === 'All') {
+                if (selectValue === 'All') {
                     try {
                         fetchData();
                     } catch (error) {
@@ -78,15 +82,19 @@ function App() {
                 }
 
                 setCountries(data);
-            }
+            };
 
-            try{
+            try {
                 fetchSelect();
             } catch (error) {
                 console.log(error);
             }
         }
-    }
+    };
+
+    const showDetails = (code) => {
+        navigate(`/${code}`);
+    };
 
     return (
         <div className={`app ${darkMode ? 'darkMode' : ''}`}>
@@ -137,12 +145,14 @@ function App() {
                                     countries.map((country) => (
                                         <Country
                                             darkMode={darkMode}
-                                            key={country.alpha3code}
+                                            key={country.alpha3Code}
+                                            code={country.alpha3Code}
                                             name={country.name}
                                             capital={country.capital}
                                             population={country.population}
                                             region={country.region}
                                             flag={country.flag}
+                                            showDetails={showDetails}
                                         />
                                     ))
                                 ) : (
@@ -153,8 +163,8 @@ function App() {
                     }
                 />
                 <Route
-                    path="country-details"
-                    element={<CountryDetails darkMode={darkMode} />}
+                    path="/:countryCode"
+                    element={<CountryDetails darkMode={darkMode} countries={countries} />}
                 />
             </Routes>
         </div>
