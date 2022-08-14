@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import Country from './components/Country';
 import CountryDetails from './components/CountryDetails';
@@ -8,9 +8,18 @@ import { Routes, Route } from 'react-router-dom';
 function App() {
     const [darkMode, setDarkMode] = useState('false');
     const [countries, setCountries] = useState([]);
+    const countriesInputRef = useRef();
+    const regionRef = useRef();
 
     const switchMode = () => {
         setDarkMode((prevState) => !prevState);
+    };
+
+    const fetchData = async () => {
+        const response = await fetch('https://restcountries.com/v2/all');
+        const data = await response.json();
+
+        setCountries(data);
     };
 
     useEffect(() => {
@@ -21,12 +30,26 @@ function App() {
         }
     }, []);
 
-    const fetchData = async () => {
-        const response = await fetch('https://restcountries.com/v2/all');
-        const data = await response.json();
+    const searchCountries = () => {
+        const searchValue = countriesInputRef.current.value;
 
-        setCountries(data);
-    };
+        if(searchValue.trim()) {
+            const fetchSearch = async () => {
+                const response = await fetch(`https://restcountries.com/v2/name/${searchValue}`)
+                const data = await response.json();
+
+                setCountries(data)
+            }
+
+            try{
+                fetchSearch()
+            } catch(error) {
+                console.log(error);
+            }
+        } else {
+            fetchData();
+        }
+    }
 
     return (
         <div className={`app ${darkMode ? 'darkMode' : ''}`}>
@@ -47,6 +70,8 @@ function App() {
                                     <input
                                         type="text"
                                         placeholder="Search for a country ..."
+                                        ref={countriesInputRef}
+                                        onChange={searchCountries}
                                     />
                                 </div>
                                 <div
@@ -54,7 +79,7 @@ function App() {
                                         darkMode ? 'darkMode' : ''
                                     }`}
                                 >
-                                    <select>
+                                    <select ref={regionRef}>
                                         <option disabled selected hidden>
                                             Filter by Continent
                                         </option>
