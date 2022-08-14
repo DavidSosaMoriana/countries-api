@@ -11,6 +11,8 @@ function App() {
     const countriesInputRef = useRef();
     const regionRef = useRef();
 
+    const noCountries = countries.status || countries.message;
+
     const switchMode = () => {
         setDarkMode((prevState) => !prevState);
     };
@@ -18,6 +20,11 @@ function App() {
     const fetchData = async () => {
         const response = await fetch('https://restcountries.com/v2/all');
         const data = await response.json();
+
+        if (data.status === 404) {
+            setCountries([]);
+            return;
+        }
 
         setCountries(data);
     };
@@ -33,21 +40,51 @@ function App() {
     const searchCountries = () => {
         const searchValue = countriesInputRef.current.value;
 
-        if(searchValue.trim()) {
+        if (searchValue.trim()) {
             const fetchSearch = async () => {
-                const response = await fetch(`https://restcountries.com/v2/name/${searchValue}`)
+                const response = await fetch(
+                    `https://restcountries.com/v2/name/${searchValue}`
+                );
                 const data = await response.json();
 
-                setCountries(data)
-            }
+                setCountries(data);
+            };
 
-            try{
-                fetchSearch()
-            } catch(error) {
+            try {
+                fetchSearch();
+            } catch (error) {
                 console.log(error);
             }
         } else {
             fetchData();
+        }
+    };
+
+    const selectRegion = () => {
+        const selectValue = regionRef.current.value;
+
+        if(selectValue.trim()) {
+            const fetchSelect = async () => {
+                const response = await fetch(`https://restcountries.com/v2/region/${selectValue}`)
+                const data = await response.json();
+
+                if(selectValue === 'All') {
+                    try {
+                        fetchData();
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    return;
+                }
+
+                setCountries(data);
+            }
+
+            try{
+                fetchSelect();
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -79,7 +116,10 @@ function App() {
                                         darkMode ? 'darkMode' : ''
                                     }`}
                                 >
-                                    <select ref={regionRef}>
+                                    <select
+                                        ref={regionRef}
+                                        onChange={selectRegion}
+                                    >
                                         <option disabled selected hidden>
                                             Filter by Continent
                                         </option>
@@ -93,17 +133,21 @@ function App() {
                             </div>
 
                             <div className="countries">
-                                {countries.map((country) => (
-                                    <Country
-                                        darkMode={darkMode}
-                                        key={country.alpha3code}
-                                        name={country.name}
-                                        capital={country.capital}
-                                        population={country.population}
-                                        region={country.region}
-                                        flag={country.flag}
-                                    />
-                                ))}
+                                {!noCountries ? (
+                                    countries.map((country) => (
+                                        <Country
+                                            darkMode={darkMode}
+                                            key={country.alpha3code}
+                                            name={country.name}
+                                            capital={country.capital}
+                                            population={country.population}
+                                            region={country.region}
+                                            flag={country.flag}
+                                        />
+                                    ))
+                                ) : (
+                                    <p>No countries found...</p>
+                                )}
                             </div>
                         </div>
                     }
