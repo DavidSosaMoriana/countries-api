@@ -164,7 +164,13 @@ function App() {
                 />
                 <Route
                     path="/:countryCode"
-                    element={<CountryDetails darkMode={darkMode} countries={countries} />}
+                    element={
+                        <CountryDetails
+                            darkMode={darkMode}
+                            countries={countries}
+                            refetch={fetchData}
+                        />
+                    }
                 />
             </Routes>
         </div>
