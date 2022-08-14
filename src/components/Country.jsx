@@ -1,22 +1,22 @@
 import React from 'react';
 
-export default function Country({ darkMode }) {
+export default function Country({ darkMode, flag, name, population, region, capital }) {
     return (
         <div className={`country ${darkMode ? "darkMode" : ""}`}>
             <div className="flag_container">
-                <img src="https://st.depositphotos.com/29544566/56468/i/600/depositphotos_564687710-stock-photo-close-up-realistic-texture-fabric.jpg" alt="Country flag" />
+                <img src={flag} alt="Country flag" />
             </div>
 
             <div className="details">
-                <h3 className="name">Name</h3>
+                <h3 className="name">{name}</h3>
                 <p>
-                    Population: <span className={`values ${darkMode ? "darkMode" : ""}`}>test</span>
+                    Population: <span className={`values ${darkMode ? "darkMode" : ""}`}>{population}</span>
                 </p>
                 <p>
-                    Region: <span className={`values ${darkMode ? "darkMode" : ""}`}>test</span>
+                    Region: <span className={`values ${darkMode ? "darkMode" : ""}`}>{region}</span>
                 </p>
                 <p>
-                    Capital: <span className={`values ${darkMode ? "darkMode" : ""}`}>test</span>
+                    Capital: <span className={`values ${darkMode ? "darkMode" : ""}`}>{capital}</span>
                 </p>
             </div>
         </div>
